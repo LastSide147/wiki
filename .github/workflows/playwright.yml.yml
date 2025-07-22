@@ -14,7 +14,7 @@
 
         steps:
           - uses: actions/checkout@v4 # Выгрузить код репозитория
-          - uses: actions/setup-node@43 # Настроить Node.js
+          - uses: actions/setup-node@4 # Настроить Node.js
             with:
               node-version: 18   # Версия Node.js
           - name: Install dependencies # Установить зависимости
