@@ -1,32 +1,32 @@
-     # playwright.yml
-    name: Playwright Tests # Название workflow
+# playwright.yml
+name: Playwright Tests # Название workflow
 
-    on:
-      push:
-        branches: [ "main" ] # Запускать workflow при push в ветку main
-      pull_request:
-        branches: [ "main" ] # Запускать workflow при pull request в ветку main
+on:
+  push:
+    branches: [ "main" ] # Запускать workflow при push в ветку main
+  pull_request:
+    branches: [ "main" ] # Запускать workflow при pull request в ветку main
 
-    jobs:
-      test:
-        timeout-minutes: 60  # Максимальное время выполнения job (60 минут)
-        runs-on: ubuntu-latest # Запускать job на Ubuntu
+jobs:
+  test:
+    timeout-minutes: 60  # Максимальное время выполнения job (60 минут)
+    runs-on: ubuntu-latest # Запускать job на Ubuntu
 
-        steps:
-          - uses: actions/checkout@v4 # Выгрузить код репозитория
-          - uses: actions/setup-node@4 # Настроить Node.js
-            with:
-              node-version: 18   # Версия Node.js
-          - name: Install dependencies # Установить зависимости
-            run: npm install
-          - name: Install Playwright Browsers # Установить браузеры Playwright
-            run: npx playwright install --with-deps
-          - name: Run Playwright tests # Запустить тесты Playwright
-            run: npx playwright test
-          - name: Upload Playwright report # Загрузить отчет Playwright
-            if: always() # Загружать отчет даже при падении тестов
-            uses: actions/upload-artifact@v4
-            with:
-              name: playwright-report
-              path: playwright-report/
-              retention-days: 30
+    steps:
+      - uses: actions/checkout@v4 # Выгрузить код репозитория
+      - uses: actions/setup-node@v3 # Настроить Node.js
+        with:
+          node-version: 18   # Версия Node.js
+      - name: Install dependencies # Установить зависимости
+        run: npm install
+      - name: Install Playwright Browsers # Установить браузеры Playwright
+        run: npx playwright install --with-deps
+      - name: Run Playwright tests # Запустить тесты Playwright
+        run: npx playwright test
+      - name: Upload Playwright report # Загрузить отчет Playwright
+        if: always() # Загружать отчет даже при падении тестов
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 30
