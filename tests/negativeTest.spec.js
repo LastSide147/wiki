@@ -61,6 +61,7 @@ test('1000 символов не нарушают работу сервиса, �
 
 
 // Система должна уведомлять о превышении допустимого количества символа без ухода на экран ошибки - Тест упадет
+// Нужно узнать ожидемое поведение при таком вводе - правильно отработал или нет неизвестно. Поле принимает такой ввод и отправляет запрос - нет maxlength
 test('FAIL 10.000 символов не нарушают работу сервиса', async({page}) => {
     function generateString(char, count) {
     let str = '';
@@ -75,6 +76,20 @@ test('FAIL 10.000 символов не нарушают работу серви
   await expect(page.locator('h1#firstHeading')).toHaveText('Search results');
 })
 // Система должна уведомлять о превышении допустимого количества символа без ухода на экран ошибки - Тест упадет
+
+test.fail('Тест должен упасть - Ввод 10000 символов', async({page}) => {
+    function generateString(char, count) {
+    let str = '';
+    for (let i = 0; i < count; i++) str += char;
+    return str;
+ }
+  const searchRequest = generateString("A", 10000)
+  await page.locator('input[name="search"]').fill(searchRequest);
+  await expect(page.locator('input[name="search"]')).toHaveValue(searchRequest);
+  await page.locator('input[name="search"]').press('Enter');    
+  await expect(page.locator('input.oo-ui-inputWidget-input')).toHaveValue(searchRequest);
+  await expect(page.locator('h1#firstHeading')).toHaveText('Search results');
+})
 
 test('На 10.000 символов приходит верный статус', async({page}) => {
     function generateString(char, count) {

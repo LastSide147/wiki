@@ -9,8 +9,15 @@ export default defineConfig({
   reporter: 'html',
   use: {
     trace: 'on-first-retry',
+    video: 'on-first-retry',
     headless: true,
     baseURL: 'https://www.wikipedia.org',
+    colorScheme: 'dark',
+    geolocation: { longitude: 37.617673, latitude: 55.755773 }, // Москва
+    permissions: ['geolocation'],
+    locale: 'ru-RU',
+    timezoneId: 'Europe/Moscow',
+    viewport: { width: 1980, height: 1080 },
   },
 
   projects: [
