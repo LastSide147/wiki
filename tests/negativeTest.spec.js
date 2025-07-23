@@ -67,7 +67,7 @@ test('FAIL 10.000 символов не нарушают работу серви
     for (let i = 0; i < count; i++) str += char;
     return str;
  }
-  const searchRequest = generateString("A", 1000)
+  const searchRequest = generateString("A", 10000)
   await page.locator('input[name="search"]').fill(searchRequest);
   await expect(page.locator('input[name="search"]')).toHaveValue(searchRequest);
   await page.locator('input[name="search"]').press('Enter');    
